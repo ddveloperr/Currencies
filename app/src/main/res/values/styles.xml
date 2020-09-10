@@ -20,6 +20,11 @@
     <!--    Text Styles-->
     <style name="TextAppearance" />
 
+    <style name="TextAppearance.Toolbar">
+        <item name="android:textSize">20sp</item>
+        <item name="color">@color/toolbar_black</item>
+    </style>
+
     <!--    Text Primary-->
     <style name="TextAppearance.Primary">
         <item name="color">@color/text_primary</item>
