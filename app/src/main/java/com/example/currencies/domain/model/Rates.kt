@@ -5,65 +5,65 @@ import java.io.Serializable
 
 data class Rates(
     @SerializedName("AUD")
-    val aud: Double?,
+    val aud: Double,
     @SerializedName("BGN")
-    val bgn: Double?,
+    val bgn: Double,
     @SerializedName("BRL")
-    val brl: Double?,
+    val brl: Double,
     @SerializedName("CAD")
-    val cad: Double?,
+    val cad: Double,
     @SerializedName("CHF")
-    val chf: Double?,
+    val chf: Double,
     @SerializedName("CNY")
-    val cny: Double?,
+    val cny: Double,
     @SerializedName("CZK")
-    val czk: Double?,
+    val czk: Double,
     @SerializedName("DKK")
-    val dkk: Double?,
+    val dkk: Double,
     @SerializedName("EUR")
-    val eur: Double?,
+    val eur: Double,
     @SerializedName("GBP")
-    val gbp: Double?,
+    val gbp: Double,
     @SerializedName("HKD")
-    val hkd: Double?,
+    val hkd: Double,
     @SerializedName("HRK")
-    val hrk: Double?,
+    val hrk: Double,
     @SerializedName("HUF")
-    val huf: Double?,
+    val huf: Double,
     @SerializedName("IDR")
-    val idr: Double?,
+    val idr: Double,
     @SerializedName("ILS")
-    val ils: Double?,
+    val ils: Double,
     @SerializedName("INR")
-    val inr: Double?,
+    val inr: Double,
     @SerializedName("ISK")
-    val isk: Double?,
+    val isk: Double,
     @SerializedName("JPY")
-    val jpy: Double?,
+    val jpy: Double,
     @SerializedName("KRW")
-    val krw: Double?,
+    val krw: Double,
     @SerializedName("MXN")
-    val mxn: Double?,
+    val mxn: Double,
     @SerializedName("MYR")
-    val myr: Double?,
+    val myr: Double,
     @SerializedName("NOK")
-    val nok: Double?,
+    val nok: Double,
     @SerializedName("NZD")
-    val nzd: Double?,
+    val nzd: Double,
     @SerializedName("PHP")
-    val php: Double?,
+    val php: Double,
     @SerializedName("PLN")
-    val pln: Double?,
+    val pln: Double,
     @SerializedName("RON")
-    val ron: Double?,
+    val ron: Double,
     @SerializedName("SEK")
-    val sek: Double?,
+    val sek: Double,
     @SerializedName("SGD")
-    val sgd: Double?,
+    val sgd: Double,
     @SerializedName("THB")
-    val thb: Double?,
+    val thb: Double,
     @SerializedName("USD")
-    val usd: Double?,
+    val usd: Double,
     @SerializedName("ZAR")
-    val zar: Double?
+    val zar: Double
 ): Serializable
