@@ -52,6 +52,14 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 
+    //dagger
+    val daggerVersion = "2.27"
+    implementation("com.google.dagger:dagger-android:$daggerVersion")
+    implementation("com.google.dagger:dagger-android-support:$daggerVersion")
+    annotationProcessor("com.google.dagger:dagger-android-processor:$daggerVersion")
+    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
+    kapt("com.google.dagger:dagger-android-processor:$daggerVersion")
+
     //rxjava
     implementation("io.reactivex.rxjava2:rxjava:2.2.19")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
