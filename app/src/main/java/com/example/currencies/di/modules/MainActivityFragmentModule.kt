@@ -1,7 +1,7 @@
 package com.example.currencies.di.modules
 
 import com.example.currencies.di.scope.FragmentScope
-import com.example.currencies.ui.FirstFragment
+import com.example.currencies.ui.CurrenciesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -10,5 +10,5 @@ abstract class MainActivityFragmentModule {
 
     @ContributesAndroidInjector
     @FragmentScope
-    abstract fun contributeFirstFragmentInjector(): FirstFragment
+    abstract fun contributeFirstFragmentInjector(): CurrenciesFragment
 }
