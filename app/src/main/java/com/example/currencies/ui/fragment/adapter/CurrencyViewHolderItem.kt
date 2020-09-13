@@ -1,4 +1,4 @@
-package com.example.currencies.ui.adapter
+package com.example.currencies.ui.fragment.adapter
 
 import androidx.annotation.DrawableRes
 import com.example.currencies.common.StringSource

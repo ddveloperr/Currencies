@@ -2,15 +2,13 @@ package com.example.currencies.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.currencies.R
 import com.example.currencies.common.utils.lazyNone
-import com.example.currencies.domain.CurrenciesRepository
-import com.example.currencies.ui.adapter.CurrenciesRecyclerAdapter
-import com.example.currencies.ui.adapter.CurrencyViewHolderItem
+import com.example.currencies.ui.fragment.adapter.CurrenciesRecyclerAdapter
+import com.example.currencies.ui.fragment.mvi.CurrenciesViewState
 import com.hannesdorfmann.mosby3.mvi.MviFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -49,9 +47,20 @@ class CurrenciesFragment : MviFragment<CurrenciesFragmentView, CurrenciesFragmen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.adapter = adapter
+        presenter.init()
     }
 
-    override fun render(items: List<CurrencyViewHolderItem>) {
-        adapter.clearAndAddAll(items)
+    override fun render(state: CurrenciesViewState) {
+        when {
+            state.isLoading -> {
+
+            }
+            state.error != null -> {
+
+            }
+            state.data != null -> {
+                adapter.clearAndAddAll(state.data.items)
+            }
+        }
     }
 }

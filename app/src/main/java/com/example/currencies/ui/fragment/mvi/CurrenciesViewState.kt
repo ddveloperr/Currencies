@@ -1,8 +1,8 @@
 package com.example.currencies.ui.fragment.mvi
 
-import com.example.currencies.ui.adapter.CurrencyViewHolderItem
+import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
 
-class CurrenciesViewState(
+data class CurrenciesViewState(
     val data: Data? = null,
     val isLoading: Boolean = false,
     val error: Throwable? = null
