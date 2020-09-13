@@ -7,8 +7,8 @@ import java.math.BigDecimal
 
 data class CurrencyViewHolderItem(
     val title: StringSource,
-    val subtitle: StringSource,
+    val subtitle: StringSource?,
     @DrawableRes
-    val icon: Int,
+    val icon: Int?,
     val value: BigDecimal
 ) : Serializable

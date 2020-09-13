@@ -71,4 +71,7 @@ dependencies {
     implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion")
     implementation("com.squareup.okhttp3:okhttp:4.8.1")
 
+    //mvi
+    implementation("com.hannesdorfmann.mosby3:mvi:3.1.1")
+
 }

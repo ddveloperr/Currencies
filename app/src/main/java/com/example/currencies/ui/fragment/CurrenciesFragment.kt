@@ -1,4 +1,4 @@
-package com.example.currencies.ui
+package com.example.currencies.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -10,6 +10,8 @@ import com.example.currencies.R
 import com.example.currencies.common.utils.lazyNone
 import com.example.currencies.domain.CurrenciesRepository
 import com.example.currencies.ui.adapter.CurrenciesRecyclerAdapter
+import com.example.currencies.ui.adapter.CurrencyViewHolderItem
+import com.hannesdorfmann.mosby3.mvi.MviFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -17,20 +19,20 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_currencies.*
 import javax.inject.Inject
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
-class CurrenciesFragment : Fragment(), HasAndroidInjector {
+class CurrenciesFragment : MviFragment<CurrenciesFragmentView, CurrenciesFragmentPresenter>(),
+    CurrenciesFragmentView, HasAndroidInjector {
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
-    lateinit var repository: CurrenciesRepository
+    lateinit var presenter: CurrenciesFragmentPresenter
 
-    private val recyclerAdapter by lazyNone { CurrenciesRecyclerAdapter() }
+    private val adapter by lazyNone { CurrenciesRecyclerAdapter() }
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
+
+    override fun createPresenter(): CurrenciesFragmentPresenter = presenter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -46,6 +48,10 @@ class CurrenciesFragment : Fragment(), HasAndroidInjector {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.adapter = recyclerAdapter
+        recyclerView.adapter = adapter
+    }
+
+    override fun render(items: List<CurrencyViewHolderItem>) {
+        adapter.clearAndAddAll(items)
     }
 }

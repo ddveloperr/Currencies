@@ -1,7 +1,7 @@
 package com.example.currencies.di.modules
 
 import com.example.currencies.di.scope.FragmentScope
-import com.example.currencies.ui.CurrenciesFragment
+import com.example.currencies.ui.fragment.CurrenciesFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
