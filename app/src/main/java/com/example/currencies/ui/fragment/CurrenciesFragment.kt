@@ -5,11 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.currencies.R
 import com.example.common.ext.lazyNone
 import com.example.currencies.ui.fragment.adapter.CurrenciesRecyclerAdapter
-import com.example.currencies.ui.fragment.mvi.CurrenciesViewState
-import com.hannesdorfmann.mosby3.mvi.MviFragment
+import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
+import com.hannesdorfmann.mosby3.mvp.MvpFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -17,20 +18,20 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_currencies.*
 import javax.inject.Inject
 
-class CurrenciesFragment : MviFragment<CurrenciesFragmentView, CurrenciesFragmentPresenter>(),
+class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmentPresenter>(),
     CurrenciesFragmentView, HasAndroidInjector {
 
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
     @Inject
-    lateinit var presenter: CurrenciesFragmentPresenter
+    lateinit var currenciesPresenter: CurrenciesFragmentPresenter
 
     private val adapter by lazyNone { CurrenciesRecyclerAdapter() }
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
-    override fun createPresenter(): CurrenciesFragmentPresenter = presenter
+    override fun createPresenter(): CurrenciesFragmentPresenter = currenciesPresenter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -50,17 +51,7 @@ class CurrenciesFragment : MviFragment<CurrenciesFragmentView, CurrenciesFragmen
         presenter.init()
     }
 
-    override fun render(state: CurrenciesViewState) {
-        when {
-            state.isLoading -> {
-
-            }
-            state.error != null -> {
-
-            }
-            state.data != null -> {
-                adapter.clearAndAddAll(state.data.items)
-            }
-        }
+    override fun render(items: List<CurrencyViewHolderItem>) {
+        adapter.clearAndAddAll(items)
     }
 }

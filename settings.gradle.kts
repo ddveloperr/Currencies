@@ -1,2 +1,2 @@
 rootProject.name = "Currencies"
-include(":app",":common")
+include(":app",":common", ":mvi")

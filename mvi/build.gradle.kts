@@ -39,8 +39,9 @@ dependencies {
 
     //rxjava
     implementation("io.reactivex.rxjava2:rxjava:2.2.19")
-    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 
     implementation("com.hannesdorfmann.mosby3:mvp:3.1.1")
+
+    implementation(project(":common"))
 
 }

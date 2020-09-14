@@ -5,23 +5,26 @@ import com.example.currencies.domain.model.CurrenciesResponse
 import com.example.currencies.domain.model.Currency
 import com.example.currencies.domain.model.mapToViewModel
 import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
+import com.example.mvi.MviReducer
 import java.math.BigDecimal
 import javax.inject.Inject
 
-class CurrenciesReducer @Inject constructor() {
+class CurrenciesReducer @Inject constructor() :
+    MviReducer<CurrenciesViewState, CurrenciesPartialState> {
 
-    fun reduce(
+
+    override fun reduce(
         previousState: CurrenciesViewState,
-        partialState: CurrenciesPartialState
+        change: CurrenciesPartialState
     ): CurrenciesViewState {
-        return when (partialState) {
+        return when (change) {
             is CurrenciesPartialState.Loading -> reduceLoadingState(previousState)
             is CurrenciesPartialState.DataLoaded -> reduceDataLoadedState(
-                partialState,
+                change,
                 previousState
             )
             is CurrenciesPartialState.FirstLoadError -> reduceFirstLoadError(
-                partialState,
+                change,
                 previousState
             )
         }

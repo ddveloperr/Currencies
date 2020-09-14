@@ -1,8 +1,8 @@
 package com.example.currencies.ui.fragment
 
-import com.example.currencies.ui.fragment.mvi.CurrenciesViewState
-import com.hannesdorfmann.mosby3.mvp.MvpView
+import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
+import com.example.mvi.MviView
 
-interface CurrenciesFragmentView: MvpView {
-    fun render(state: CurrenciesViewState)
+interface CurrenciesFragmentView: MviView {
+    fun render(items: List<CurrencyViewHolderItem>)
 }

@@ -1,32 +1,48 @@
 package com.example.currencies.ui.fragment
 
-import com.example.currencies.ui.fragment.mvi.CurrenciesReducer
-import com.example.currencies.ui.fragment.mvi.CurrenciesUseCase
-import com.example.currencies.ui.fragment.mvi.CurrenciesViewAction
-import com.example.currencies.ui.fragment.mvi.CurrenciesViewState
-import com.hannesdorfmann.mosby3.mvi.MviBasePresenter
+import com.example.currencies.domain.model.Currency
+import com.example.currencies.ui.fragment.mvi.*
+import com.example.mvi.MviPresenter
+import com.example.mvi.MviSubscriptions
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
 class CurrenciesFragmentPresenter @Inject constructor(
-    private val useCase: CurrenciesUseCase,
-    private val reducer: CurrenciesReducer
-) : MviBasePresenter<CurrenciesFragmentView, CurrenciesViewState>() {
+    useCase: CurrenciesUseCase,
+    reducer: CurrenciesReducer
+) : MviPresenter<CurrenciesFragmentView, CurrenciesViewAction, CurrenciesViewState, CurrenciesInitialState, CurrenciesPartialState, MviSubscriptions>(
+    reducer,
+    useCase
+) {
 
-    private val viewActionSubject = BehaviorSubject.create<CurrenciesViewAction>()
-
-    fun init() {
+    override fun init(){
+        super.init()
         viewActionSubject.onNext(CurrenciesViewAction.StartFirstLoad)
     }
 
-    override fun bindIntents() {
-        subscribeViewState(
-            viewActionSubject.subscribeOn(Schedulers.io()).distinctUntilChanged().flatMap {
-                useCase.onAction(it)
-            }.scan(CurrenciesViewState(), reducer::reduce)
-                .observeOn(AndroidSchedulers.mainThread()), CurrenciesFragmentView::render
+    override val infoDataSubject: BehaviorSubject<CurrenciesInitialState> =
+        BehaviorSubject.createDefault(
+            CurrenciesInitialState(Currency.USD)
         )
+
+    override fun getInitialViewState(): CurrenciesViewState {
+        return CurrenciesViewState(isLoading = true)
     }
+
+    override fun render(state: CurrenciesViewState) {
+        when {
+            state.isLoading -> {
+
+            }
+            state.error != null -> {
+
+            }
+            state.data != null -> {
+                ifViewAttached { it.render(state.data.items) }
+            }
+        }
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.example.currencies.ui.fragment.mvi
 
-sealed class CurrenciesViewAction {
+import com.example.mvi.action.MviAction
+
+sealed class CurrenciesViewAction: MviAction {
     object StartFirstLoad: CurrenciesViewAction()
 }
