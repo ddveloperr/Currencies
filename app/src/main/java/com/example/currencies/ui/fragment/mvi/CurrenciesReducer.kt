@@ -1,9 +1,8 @@
 package com.example.currencies.ui.fragment.mvi
 
-import com.example.currencies.common.StringSource
+import com.example.common.model.StringSource
 import com.example.currencies.domain.model.CurrenciesResponse
 import com.example.currencies.domain.model.Currency
-import com.example.currencies.domain.model.CurrencyViewModel
 import com.example.currencies.domain.model.mapToViewModel
 import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
 import java.math.BigDecimal

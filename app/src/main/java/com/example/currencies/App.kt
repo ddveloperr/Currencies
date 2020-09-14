@@ -1,7 +1,7 @@
 package com.example.currencies
 
 import android.app.Application
-import com.example.currencies.common.utils.addDefaultUncaughtExceptionHandler
+import com.example.common.ext.addDefaultUncaughtExceptionHandler
 import com.example.currencies.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector

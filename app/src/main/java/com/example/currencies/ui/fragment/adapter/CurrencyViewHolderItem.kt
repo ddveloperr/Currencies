@@ -1,7 +1,7 @@
 package com.example.currencies.ui.fragment.adapter
 
 import androidx.annotation.DrawableRes
-import com.example.currencies.common.StringSource
+import com.example.common.model.StringSource
 import java.io.Serializable
 import java.math.BigDecimal
 

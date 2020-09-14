@@ -1,4 +1,4 @@
-package com.example.currencies.common.utils
+package com.example.common.ext
 
 inline fun addDefaultUncaughtExceptionHandler(crossinline uncaughtExceptionHandler: (Thread, error: Throwable) -> Unit) {
     val currentUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()

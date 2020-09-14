@@ -1,4 +1,4 @@
-package com.example.currencies.common
+package com.example.common.model
 
 import android.content.Context
 import androidx.annotation.StringRes

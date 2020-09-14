@@ -74,4 +74,6 @@ dependencies {
     //mvi
     implementation("com.hannesdorfmann.mosby3:mvi:3.1.1")
 
+    implementation(project(":common"))
+
 }

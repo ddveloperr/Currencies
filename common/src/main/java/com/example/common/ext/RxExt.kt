@@ -1,4 +1,4 @@
-package com.example.currencies.common.utils
+package com.example.common.ext
 
 import io.reactivex.Observable
 

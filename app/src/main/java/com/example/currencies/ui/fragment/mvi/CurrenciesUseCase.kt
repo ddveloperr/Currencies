@@ -1,6 +1,6 @@
 package com.example.currencies.ui.fragment.mvi
 
-import com.example.currencies.common.utils.toObservable
+import com.example.common.ext.toObservable
 import com.example.currencies.domain.CurrenciesRepository
 import io.reactivex.Observable
 import javax.inject.Inject

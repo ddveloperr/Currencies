@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.currencies.R
-import com.example.currencies.common.utils.lazyNone
+import com.example.common.ext.lazyNone
 import com.example.currencies.ui.fragment.adapter.CurrenciesRecyclerAdapter
 import com.example.currencies.ui.fragment.mvi.CurrenciesViewState
 import com.hannesdorfmann.mosby3.mvi.MviFragment
