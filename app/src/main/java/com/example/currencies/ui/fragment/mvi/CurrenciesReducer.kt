@@ -27,7 +27,8 @@ class CurrenciesReducer @Inject constructor() :
                 change,
                 previousState
             )
-            CurrenciesPartialState.Empty -> previousState
+            is CurrenciesPartialState.OnItemClicked -> reduceOnItemClicked(change, previousState)
+            is CurrenciesPartialState.Empty -> previousState
         }
     }
 
@@ -53,7 +54,26 @@ class CurrenciesReducer @Inject constructor() :
         return previousState.copy(data = null, isLoading = false, error = partialState.throwable)
     }
 
-    private fun getDataLoadedList(response: CurrenciesResponse, multiplicator: BigDecimal): CurrenciesViewState.Data {
+    private fun reduceOnItemClicked(
+        partialState: CurrenciesPartialState.OnItemClicked,
+        previousState: CurrenciesViewState
+    ): CurrenciesViewState {
+        val items = previousState.data!!.items.toMutableList()
+        val item = partialState.item
+        items.remove(item)
+        items.add(0, item)
+        return CurrenciesViewState(
+            CurrenciesViewState.Data(
+                items,
+                CurrenciesInitialState(item.currency, item.value)
+            ), isLoading = false, error = null
+        )
+    }
+
+    private fun getDataLoadedList(
+        response: CurrenciesResponse,
+        multiplicator: BigDecimal
+    ): CurrenciesViewState.Data {
         val items = mutableListOf<CurrencyViewHolderItem>()
         items.add(
             getCurrencyViewHolderItem(
@@ -76,7 +96,8 @@ class CurrenciesReducer @Inject constructor() :
             title = StringSource.Text(currency.name),
             subtitle = currencyViewModel.nameRes?.let { StringSource.Resource(it) },
             icon = currencyViewModel.iconRes,
-            value = rate
+            value = rate,
+            currency = currency
         )
     }
 }

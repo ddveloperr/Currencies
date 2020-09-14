@@ -2,6 +2,7 @@ package com.example.currencies.ui.fragment.mvi
 
 import com.example.common.ext.toObservable
 import com.example.currencies.domain.CurrenciesRepository
+import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
 import com.example.mvi.MviSubscriptions
 import com.example.mvi.domain.MviUseCase
 import io.reactivex.Observable
@@ -15,8 +16,8 @@ class CurrenciesUseCase @Inject constructor(private val repository: CurrenciesRe
         state: CurrenciesInitialState
     ): Observable<CurrenciesPartialState> {
         return when (action) {
-            CurrenciesViewAction.StartFirstLoad -> onStartFirstLoad(state)
-            is CurrenciesViewAction.OnItemClicked -> onItemClicked(state)
+            is CurrenciesViewAction.StartFirstLoad -> onStartFirstLoad(state)
+            is CurrenciesViewAction.OnItemClicked -> onItemClicked(action.item)
         }
     }
 
@@ -28,7 +29,9 @@ class CurrenciesUseCase @Inject constructor(private val repository: CurrenciesRe
             .onErrorReturn { CurrenciesPartialState.FirstLoadError(it) }
     }
 
-    private fun onItemClicked(state: CurrenciesInitialState): Observable<CurrenciesPartialState> {
-        return Observable.just(CurrenciesPartialState.Empty)
+    private fun onItemClicked(
+        item: CurrencyViewHolderItem
+    ): Observable<CurrenciesPartialState> {
+        return CurrenciesPartialState.OnItemClicked(item).toObservable()
     }
 }
