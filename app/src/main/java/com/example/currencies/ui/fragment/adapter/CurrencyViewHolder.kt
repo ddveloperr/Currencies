@@ -6,15 +6,22 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.common.recycler.OnItemClickListener
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_currency.*
 
-class CurrencyViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
+class CurrencyViewHolder(
+    override val containerView: View,
+    private val onItemClickListener: OnItemClickListener<CurrencyViewHolderItem>
+) : RecyclerView.ViewHolder(containerView),
     LayoutContainer {
 
     fun bindItem(item: CurrencyViewHolderItem) {
         bindIcon(item)
         bindSubtitle(item)
+        containerView.setOnClickListener {
+            onItemClickListener.invoke(item)
+        }
         currencyTitle.text = item.title.getText(containerView.context)
         rateValue.text = Editable.Factory.getInstance().newEditable(item.value.toString())
     }

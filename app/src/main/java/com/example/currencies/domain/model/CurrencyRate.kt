@@ -1,3 +1,5 @@
 package com.example.currencies.domain.model
 
-data class CurrencyRate(val currency: Currency, val rate: Double)
+import java.math.BigDecimal
+
+data class CurrencyRate(val currency: Currency, val rate: BigDecimal)

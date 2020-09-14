@@ -21,7 +21,7 @@ class CurrenciesResponseGsonConverter : JsonDeserializer<CurrenciesResponse> {
     ): CurrenciesResponse {
         val baseCurrency = json!!.asJsonObject.get(JSON_MEMBER_BASE_CURRENCY).asString
         val currencyRates = json.asJsonObject.get(JSON_MEMBER_RATES).asJsonObject.entrySet().map {
-            CurrencyRate(Currency.valueOf(it.key), it.value.asDouble)
+            CurrencyRate(Currency.valueOf(it.key), it.value.asBigDecimal)
         }
         return CurrenciesResponse(baseCurrency, currencyRates)
     }

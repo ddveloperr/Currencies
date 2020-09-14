@@ -8,5 +8,5 @@ data class CurrenciesViewState(
     val isLoading: Boolean = false,
     val error: Throwable? = null
 ): MviViewState {
-    class Data(val items: List<CurrencyViewHolderItem>)
+    class Data(val items: List<CurrencyViewHolderItem>, val initialState: CurrenciesInitialState? = null)
 }

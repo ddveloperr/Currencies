@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.currencies.R
 import com.example.common.ext.lazyNone
+import com.example.common.recycler.OnItemClickListener
 import com.example.currencies.ui.fragment.adapter.CurrenciesRecyclerAdapter
 import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
 import com.hannesdorfmann.mosby3.mvp.MvpFragment
@@ -27,7 +28,11 @@ class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmen
     @Inject
     lateinit var currenciesPresenter: CurrenciesFragmentPresenter
 
-    private val adapter by lazyNone { CurrenciesRecyclerAdapter() }
+    private val adapter by lazyNone { CurrenciesRecyclerAdapter(itemClickListener) }
+
+    private val itemClickListener: OnItemClickListener<CurrencyViewHolderItem> = { item ->
+        presenter.onItemClicked(item)
+    }
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
