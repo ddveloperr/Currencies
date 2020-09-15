@@ -22,12 +22,12 @@
 
     <style name="TextAppearance.Toolbar">
         <item name="android:textSize">20sp</item>
-        <item name="color">@color/toolbar_black</item>
+        <item name="android:textColor">@color/toolbar_black</item>
     </style>
 
     <!--    Text Primary-->
     <style name="TextAppearance.Primary">
-        <item name="color">@color/text_primary</item>
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <style name="TextAppearance.Primary.16">
@@ -40,7 +40,7 @@
 
     <!--    Text secondary-->
     <style name="TextAppearance.Secondary">
-        <item name="color">@color/text_secondary</item>
+        <item name="android:textColor">@color/text_secondary</item>
     </style>
 
     <style name="TextAppearance.Secondary.14">
