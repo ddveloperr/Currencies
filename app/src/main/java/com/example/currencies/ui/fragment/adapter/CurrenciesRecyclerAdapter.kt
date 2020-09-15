@@ -2,6 +2,7 @@ package com.example.currencies.ui.fragment.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.recycler.OnItemClickListener
 import com.example.currencies.R
@@ -25,9 +26,11 @@ class CurrenciesRecyclerAdapter(private val onItemClickListener: OnItemClickList
     override fun getItemCount(): Int = adapterItems.size
 
     fun clearAndAddAll(items: List<CurrencyViewHolderItem>) {
+        val diffCallback = CurrenciesDiffCallback(adapterItems, items)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         adapterItems.clear()
         adapterItems.addAll(items)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     private fun getItem(position: Int): CurrencyViewHolderItem = adapterItems[position]

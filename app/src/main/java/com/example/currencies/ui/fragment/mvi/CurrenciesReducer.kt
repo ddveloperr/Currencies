@@ -75,15 +75,18 @@ class CurrenciesReducer @Inject constructor() :
         multiplicator: BigDecimal
     ): CurrenciesViewState.Data {
         val items = mutableListOf<CurrencyViewHolderItem>()
+        val baseCurrency = response.baseCurrency
         items.add(
             getCurrencyViewHolderItem(
-                Currency.valueOf(response.baseCurrency),
+                Currency.valueOf(baseCurrency),
                 multiplicator
             )
         )
-        items.addAll(response.currencyRates.map {
-            getCurrencyViewHolderItem(it.currency, it.rate * multiplicator)
-        })
+        Currency.values().forEach {
+            if (it.name != baseCurrency) {
+                items.add(getCurrencyViewHolderItem(it, response.currencyRates.getValue(it) * multiplicator))
+            }
+        }
         return CurrenciesViewState.Data(items)
     }
 

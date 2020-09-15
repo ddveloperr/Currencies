@@ -7,6 +7,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import java.lang.reflect.Type
+import java.math.BigDecimal
 
 class CurrenciesResponseGsonConverter : JsonDeserializer<CurrenciesResponse> {
     companion object {
@@ -21,8 +22,8 @@ class CurrenciesResponseGsonConverter : JsonDeserializer<CurrenciesResponse> {
     ): CurrenciesResponse {
         val baseCurrency = json!!.asJsonObject.get(JSON_MEMBER_BASE_CURRENCY).asString
         val currencyRates = json.asJsonObject.get(JSON_MEMBER_RATES).asJsonObject.entrySet().map {
-            CurrencyRate(Currency.valueOf(it.key), it.value.asBigDecimal)
-        }
+            Currency.valueOf(it.key) to it.value.asBigDecimal
+        }.toMap()
         return CurrenciesResponse(baseCurrency, currencyRates)
     }
 }
