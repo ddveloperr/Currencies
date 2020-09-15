@@ -64,7 +64,12 @@ class CurrencyViewHolder(
     }
 
     private fun bindEditText(item: CurrencyViewHolderItem) {
-        rateValue.text = Editable.Factory.getInstance().newEditable(item.value.toString())
+        rateValue.removeTextChangedListener(textWatcher)
+        rateValue.text = Editable.Factory.getInstance().newEditable(getEditableValue(item))
         rateValue.addTextChangedListener(textWatcher)
+    }
+
+    private fun getEditableValue(item: CurrencyViewHolderItem): String {
+        return (item.rate * item.multiplicator).toString()
     }
 }

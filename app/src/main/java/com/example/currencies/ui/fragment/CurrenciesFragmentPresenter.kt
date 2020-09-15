@@ -39,6 +39,10 @@ class CurrenciesFragmentPresenter @Inject constructor(
         viewActionSubject.onNext(CurrenciesViewAction.OnItemClicked(item))
     }
 
+    fun onEditValueChanged(item: CurrencyViewHolderItem, value: BigDecimal?) {
+        viewActionSubject.onNext(CurrenciesViewAction.OnEditValueChanged(item, value))
+    }
+
     override fun render(state: CurrenciesViewState) {
         state.data?.initialState?.let {
             infoDataSubject.onNext(it)
@@ -51,7 +55,7 @@ class CurrenciesFragmentPresenter @Inject constructor(
 
             }
             state.data != null -> {
-                ifViewAttached { it.render(state.data.items) }
+                ifViewAttached { it.render(state.data.getList()) }
             }
         }
     }

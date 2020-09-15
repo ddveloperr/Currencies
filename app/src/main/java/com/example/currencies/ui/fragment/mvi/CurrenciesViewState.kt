@@ -7,6 +7,17 @@ data class CurrenciesViewState(
     val data: Data? = null,
     val isLoading: Boolean = false,
     val error: Throwable? = null
-): MviViewState {
-    class Data(val items: List<CurrencyViewHolderItem>, val initialState: CurrenciesInitialState? = null)
+) : MviViewState {
+    data class Data(
+        val baseCurrencyItem: CurrencyViewHolderItem,
+        val items: List<CurrencyViewHolderItem>,
+        val initialState: CurrenciesInitialState? = null
+    ) {
+        fun getList(): List<CurrencyViewHolderItem> {
+            return mutableListOf<CurrencyViewHolderItem>().apply {
+                add(baseCurrencyItem)
+                addAll(items)
+            }
+        }
+    }
 }

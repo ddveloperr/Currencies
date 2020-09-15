@@ -12,6 +12,10 @@ import javax.inject.Inject
 class CurrenciesReducer @Inject constructor() :
     MviReducer<CurrenciesViewState, CurrenciesPartialState> {
 
+    companion object {
+        private val BASE_CURRENCY_RATE = BigDecimal.ONE
+    }
+
 
     override fun reduce(
         previousState: CurrenciesViewState,
@@ -28,6 +32,10 @@ class CurrenciesReducer @Inject constructor() :
                 previousState
             )
             is CurrenciesPartialState.OnItemClicked -> reduceOnItemClicked(change, previousState)
+            is CurrenciesPartialState.OnEditValueChanged -> reduceOnEditValueChanged(
+                change,
+                previousState
+            )
             is CurrenciesPartialState.Empty -> previousState
         }
     }
@@ -61,12 +69,25 @@ class CurrenciesReducer @Inject constructor() :
         val items = previousState.data!!.items.toMutableList()
         val item = partialState.item
         items.remove(item)
-        items.add(0, item)
+        items.add(0, previousState.data.baseCurrencyItem)
         return CurrenciesViewState(
             CurrenciesViewState.Data(
+                item,
                 items,
-                CurrenciesInitialState(item.currency, item.value)
+                CurrenciesInitialState(item.currency, item.multiplicator)
             ), isLoading = false, error = null
+        )
+    }
+
+    private fun reduceOnEditValueChanged(
+        partialState: CurrenciesPartialState.OnEditValueChanged,
+        previousState: CurrenciesViewState
+    ): CurrenciesViewState {
+        return previousState.copy(
+            data = previousState.data!!.copy(
+                baseCurrencyItem = previousState.data!!.baseCurrencyItem.copy(multiplicator = partialState.value!!),
+                items = previousState.data!!.items.map { it.copy(multiplicator = partialState.value!!) }
+            )
         )
     }
 
@@ -76,24 +97,31 @@ class CurrenciesReducer @Inject constructor() :
     ): CurrenciesViewState.Data {
         val items = mutableListOf<CurrencyViewHolderItem>()
         val baseCurrency = response.baseCurrency
-        items.add(
-            getCurrencyViewHolderItem(
-                Currency.valueOf(baseCurrency),
-                multiplicator,
-                isBaseCurrency = true
-            )
-        )
         Currency.values().forEach {
             if (it.name != baseCurrency) {
-                items.add(getCurrencyViewHolderItem(it, response.currencyRates.getValue(it) * multiplicator))
+                items.add(
+                    getCurrencyViewHolderItem(
+                        it,
+                        response.currencyRates.getValue(it),
+                        multiplicator
+                    )
+                )
             }
         }
-        return CurrenciesViewState.Data(items)
+        return CurrenciesViewState.Data(
+            getCurrencyViewHolderItem(
+                Currency.valueOf(baseCurrency),
+                BASE_CURRENCY_RATE,
+                multiplicator,
+                isBaseCurrency = true
+            ), items
+        )
     }
 
     private fun getCurrencyViewHolderItem(
         currency: Currency,
         rate: BigDecimal,
+        multiplicator: BigDecimal,
         isBaseCurrency: Boolean = false
     ): CurrencyViewHolderItem {
         val currencyViewModel = currency.mapToViewModel()
@@ -101,7 +129,8 @@ class CurrenciesReducer @Inject constructor() :
             title = StringSource.Text(currency.name),
             subtitle = currencyViewModel.nameRes?.let { StringSource.Resource(it) },
             icon = currencyViewModel.iconRes,
-            value = rate,
+            rate = rate,
+            multiplicator = multiplicator,
             currency = currency,
             isBaseCurrency = isBaseCurrency
         )

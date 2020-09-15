@@ -2,11 +2,9 @@ package com.example.currencies.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.example.currencies.R
 import com.example.common.ext.lazyNone
 import com.example.common.recycler.OnItemClickListener
@@ -31,7 +29,7 @@ class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmen
 
     private val adapter by lazyNone {
         CurrenciesRecyclerAdapter(itemClickListener, onRateChanged = { item, value ->
-            Log.d("qweqweq", value.toString())
+            presenter.onEditValueChanged(item, value)
         })
     }
 

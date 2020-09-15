@@ -10,5 +10,6 @@ sealed class CurrenciesPartialState: MviPartialState {
     data class DataLoaded(val data: CurrenciesResponse, val multiplicator: BigDecimal) : CurrenciesPartialState()
     data class OnItemClicked(val item: CurrencyViewHolderItem): CurrenciesPartialState()
     data class FirstLoadError(val throwable: Throwable) : CurrenciesPartialState()
+    data class OnEditValueChanged(val item: CurrencyViewHolderItem, val value: BigDecimal?): CurrenciesPartialState()
     object Empty: CurrenciesPartialState()
 }
