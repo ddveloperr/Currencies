@@ -1,5 +1,6 @@
 package com.example.currencies.ui.fragment.adapter
 
+import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -51,10 +52,7 @@ class CurrencyViewHolder(
     }
 
     private fun bindIcon(item: CurrencyViewHolderItem) {
-        flagIcon.isInvisible = item.icon == null
-        item.icon?.let {
-            flagIcon.setImageDrawable(ContextCompat.getDrawable(containerView.context, it))
-        }
+        flagIcon.setImageDrawable(getCurrencyDrawable(item))
     }
 
     private fun bindSubtitle(item: CurrencyViewHolderItem) {
@@ -74,5 +72,16 @@ class CurrencyViewHolder(
     private fun getEditableValue(item: CurrencyViewHolderItem): StringSource {
         val multiplicator = item.multiplicator
         return if (multiplicator != null) StringSource.Text((item.rate * item.multiplicator).toString()) else StringSource.Empty
+    }
+
+    private fun getCurrencyDrawable(item: CurrencyViewHolderItem): Drawable? {
+        return if (item.icon != null) {
+            ContextCompat.getDrawable(containerView.context, item.icon)
+        } else {
+            CurrenciesViewHolderDrawableHelper.getDefaultDrawable(
+                containerView.context,
+                item.currency.name[0].toString()
+            )
+        }
     }
 }
