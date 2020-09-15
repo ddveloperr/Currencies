@@ -7,6 +7,7 @@ import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.ext.toBigDecimal
+import com.example.common.model.StringSource
 import com.example.common.recycler.OnItemClickListener
 import com.example.common.text.AbstractTextWatcher
 import kotlinx.android.extensions.LayoutContainer
@@ -65,11 +66,13 @@ class CurrencyViewHolder(
 
     private fun bindEditText(item: CurrencyViewHolderItem) {
         rateValue.removeTextChangedListener(textWatcher)
-        rateValue.text = Editable.Factory.getInstance().newEditable(getEditableValue(item))
+        rateValue.text = Editable.Factory.getInstance()
+            .newEditable(getEditableValue(item).getText(containerView.context))
         rateValue.addTextChangedListener(textWatcher)
     }
 
-    private fun getEditableValue(item: CurrencyViewHolderItem): String {
-        return (item.rate * item.multiplicator).toString()
+    private fun getEditableValue(item: CurrencyViewHolderItem): StringSource {
+        val multiplicator = item.multiplicator
+        return if (multiplicator != null) StringSource.Text((item.rate * item.multiplicator).toString()) else StringSource.Empty
     }
 }

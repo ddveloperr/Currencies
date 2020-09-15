@@ -7,7 +7,7 @@ import java.math.BigDecimal
 
 sealed class CurrenciesPartialState: MviPartialState {
     object Loading : CurrenciesPartialState()
-    data class DataLoaded(val data: CurrenciesResponse, val multiplicator: BigDecimal) : CurrenciesPartialState()
+    data class DataLoaded(val data: CurrenciesResponse, val multiplicator: BigDecimal?) : CurrenciesPartialState()
     data class OnItemClicked(val item: CurrencyViewHolderItem): CurrenciesPartialState()
     data class FirstLoadError(val throwable: Throwable) : CurrenciesPartialState()
     data class OnEditValueChanged(val item: CurrencyViewHolderItem, val value: BigDecimal?): CurrenciesPartialState()

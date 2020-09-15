@@ -85,15 +85,15 @@ class CurrenciesReducer @Inject constructor() :
     ): CurrenciesViewState {
         return previousState.copy(
             data = previousState.data!!.copy(
-                baseCurrencyItem = previousState.data!!.baseCurrencyItem.copy(multiplicator = partialState.value!!),
-                items = previousState.data!!.items.map { it.copy(multiplicator = partialState.value!!) }
+                baseCurrencyItem = previousState.data!!.baseCurrencyItem.copy(multiplicator = partialState.value),
+                items = previousState.data!!.items.map { it.copy(multiplicator = partialState.value) }
             )
         )
     }
 
     private fun getDataLoadedList(
         response: CurrenciesResponse,
-        multiplicator: BigDecimal
+        multiplicator: BigDecimal?
     ): CurrenciesViewState.Data {
         val items = mutableListOf<CurrencyViewHolderItem>()
         val baseCurrency = response.baseCurrency
@@ -121,7 +121,7 @@ class CurrenciesReducer @Inject constructor() :
     private fun getCurrencyViewHolderItem(
         currency: Currency,
         rate: BigDecimal,
-        multiplicator: BigDecimal,
+        multiplicator: BigDecimal?,
         isBaseCurrency: Boolean = false
     ): CurrencyViewHolderItem {
         val currencyViewModel = currency.mapToViewModel()

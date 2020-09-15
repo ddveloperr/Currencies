@@ -13,4 +13,8 @@ sealed class StringSource {
     class Resource(@StringRes private val value: Int) : StringSource() {
         override fun getText(context: Context): String = context.getString(value)
     }
+
+    object Empty: StringSource(){
+        override fun getText(context: Context): String = ""
+    }
 }
