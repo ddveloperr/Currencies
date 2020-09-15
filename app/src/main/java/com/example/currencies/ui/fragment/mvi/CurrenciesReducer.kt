@@ -79,7 +79,8 @@ class CurrenciesReducer @Inject constructor() :
         items.add(
             getCurrencyViewHolderItem(
                 Currency.valueOf(baseCurrency),
-                multiplicator
+                multiplicator,
+                isBaseCurrency = true
             )
         )
         Currency.values().forEach {
@@ -92,7 +93,8 @@ class CurrenciesReducer @Inject constructor() :
 
     private fun getCurrencyViewHolderItem(
         currency: Currency,
-        rate: BigDecimal
+        rate: BigDecimal,
+        isBaseCurrency: Boolean = false
     ): CurrencyViewHolderItem {
         val currencyViewModel = currency.mapToViewModel()
         return CurrencyViewHolderItem(
@@ -100,7 +102,8 @@ class CurrenciesReducer @Inject constructor() :
             subtitle = currencyViewModel.nameRes?.let { StringSource.Resource(it) },
             icon = currencyViewModel.iconRes,
             value = rate,
-            currency = currency
+            currency = currency,
+            isBaseCurrency = isBaseCurrency
         )
     }
 }

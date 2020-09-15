@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.common.recycler.OnItemClickListener
 import com.example.currencies.R
 
-class CurrenciesRecyclerAdapter(private val onItemClickListener: OnItemClickListener<CurrencyViewHolderItem>) :
+class CurrenciesRecyclerAdapter(
+    private val onItemClickListener: OnItemClickListener<CurrencyViewHolderItem>,
+    private val onRateChanged: OnRateChanged
+) :
     RecyclerView.Adapter<CurrencyViewHolder>() {
 
     private val adapterItems: MutableList<CurrencyViewHolderItem> = mutableListOf()
@@ -15,7 +18,8 @@ class CurrenciesRecyclerAdapter(private val onItemClickListener: OnItemClickList
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         return CurrencyViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_currency, parent, false),
-            onItemClickListener
+            onItemClickListener,
+            onRateChanged
         )
     }
 

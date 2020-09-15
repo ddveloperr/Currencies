@@ -12,5 +12,6 @@ data class CurrencyViewHolderItem(
     @DrawableRes
     val icon: Int?,
     val value: BigDecimal,
-    val currency: Currency
+    val currency: Currency,
+    val isBaseCurrency: Boolean = false
 ) : Serializable

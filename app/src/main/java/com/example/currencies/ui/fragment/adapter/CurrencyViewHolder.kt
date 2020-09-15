@@ -6,24 +6,47 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.common.ext.toBigDecimal
 import com.example.common.recycler.OnItemClickListener
+import com.example.common.text.AbstractTextWatcher
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_currency.*
+import java.math.BigDecimal
+
+typealias OnRateChanged = (item: CurrencyViewHolderItem, value: BigDecimal?) -> Unit
 
 class CurrencyViewHolder(
     override val containerView: View,
-    private val onItemClickListener: OnItemClickListener<CurrencyViewHolderItem>
-) : RecyclerView.ViewHolder(containerView),
-    LayoutContainer {
+    private val onItemClickListener: OnItemClickListener<CurrencyViewHolderItem>,
+    private val onRateChanged: OnRateChanged
+) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+    private var item: CurrencyViewHolderItem? = null
+
+    init {
+        containerView.setOnClickListener {
+            item?.let { item ->
+                onItemClickListener.invoke(item)
+            }
+
+        }
+    }
+
+    private val textWatcher = object : AbstractTextWatcher() {
+        override fun afterTextChanged(s: Editable?) {
+            item?.let {
+                onRateChanged.invoke(it, s.toBigDecimal())
+            }
+        }
+    }
 
     fun bindItem(item: CurrencyViewHolderItem) {
+        this.item = item
         bindIcon(item)
         bindSubtitle(item)
-        containerView.setOnClickListener {
-            onItemClickListener.invoke(item)
-        }
+        bindEditText(item)
+
         currencyTitle.text = item.title.getText(containerView.context)
-        rateValue.text = Editable.Factory.getInstance().newEditable(item.value.toString())
     }
 
     private fun bindIcon(item: CurrencyViewHolderItem) {
@@ -38,5 +61,10 @@ class CurrencyViewHolder(
         item.subtitle?.let {
             currencySubtitle.text = it.getText(containerView.context)
         }
+    }
+
+    private fun bindEditText(item: CurrencyViewHolderItem) {
+        rateValue.text = Editable.Factory.getInstance().newEditable(item.value.toString())
+        rateValue.addTextChangedListener(textWatcher)
     }
 }
