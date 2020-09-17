@@ -72,7 +72,7 @@ class CurrenciesReducer @Inject constructor() :
     ): CurrenciesViewState {
         val items = previousState.data!!.items.toMutableList()
         val item = partialState.item
-        items.remove(item)
+        items.removeAt(items.indexOfFirst { it.currency === item.currency })
         items.add(0, previousState.data.baseCurrencyItem)
         return previousState.copy(
             data = previousState.data.copy(
