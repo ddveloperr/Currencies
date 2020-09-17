@@ -71,7 +71,7 @@ class CurrencyViewHolder(
 
     private fun getEditableValue(item: CurrencyViewHolderItem): StringSource {
         val multiplicator = item.multiplicator
-        return if (multiplicator != null) StringSource.Text((item.rate * item.multiplicator).toString()) else StringSource.Empty
+        return if (multiplicator != null) StringSource.Text(item.getDisplayValue().toString()) else StringSource.Empty
     }
 
     private fun getCurrencyDrawable(item: CurrencyViewHolderItem): Drawable? {

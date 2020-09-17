@@ -55,6 +55,7 @@ class CurrenciesFragmentPresenter @Inject constructor(
     override fun renderSubscriptionEvent(subscriptionEvent: CurrenciesSubscriptions) {
         when (subscriptionEvent) {
             is CurrenciesSubscriptions.StartRateUpdate -> startCurrencyUpdate(subscriptionEvent.baseCurrency)
+            CurrenciesSubscriptions.StopRateUpdate -> cancelCurrencyUpdate()
         }
     }
 

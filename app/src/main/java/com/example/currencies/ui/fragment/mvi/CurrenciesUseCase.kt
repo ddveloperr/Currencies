@@ -1,6 +1,7 @@
 package com.example.currencies.ui.fragment.mvi
 
 import com.example.common.ext.toObservable
+import com.example.common.ext.valueOrZero
 import com.example.currencies.domain.CurrenciesRepository
 import com.example.currencies.domain.model.CurrenciesResponse
 import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
@@ -41,9 +42,12 @@ class CurrenciesUseCase @Inject constructor(private val repository: CurrenciesRe
     private fun onItemClicked(
         item: CurrencyViewHolderItem
     ): Observable<CurrenciesPartialState> {
-        return CurrenciesPartialState.OnItemClicked(item).toObservable().cast(CurrenciesPartialState::class.java).doOnNext {
+        subscriptionsSubject.onNext(CurrenciesSubscriptions.StopRateUpdate)
+        return repository.getCurrencyRates(item.currency.name).flatMapObservable {
             subscriptionsSubject.onNext(CurrenciesSubscriptions.StartRateUpdate(item.currency))
-        }
+            CurrenciesPartialState.DataLoaded(it, item.getDisplayValue()).toObservable()
+        }.cast(CurrenciesPartialState::class.java)
+            .startWith(CurrenciesPartialState.OnItemClicked(item))
     }
 
     private fun onEditValueChanged(

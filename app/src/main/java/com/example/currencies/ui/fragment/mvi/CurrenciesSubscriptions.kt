@@ -5,4 +5,5 @@ import com.example.mvi.MviSubscriptions
 
 sealed class CurrenciesSubscriptions : MviSubscriptions {
     data class StartRateUpdate(val baseCurrency: Currency) : CurrenciesSubscriptions()
+    object StopRateUpdate : CurrenciesSubscriptions()
 }

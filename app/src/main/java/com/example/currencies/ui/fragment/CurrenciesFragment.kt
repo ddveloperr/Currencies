@@ -35,7 +35,7 @@ class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmen
 
     private val itemClickListener: OnItemClickListener<CurrencyViewHolderItem> = { item ->
         presenter.onItemClicked(item)
-        //recyclerView.smoothScrollToPosition(0)
+        recyclerView.smoothScrollToPosition(0)
     }
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
