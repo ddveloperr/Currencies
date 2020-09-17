@@ -36,6 +36,10 @@ class CurrenciesReducer @Inject constructor() :
                 change,
                 previousState
             )
+            is CurrenciesPartialState.OnCurrencyRateUpdate -> reduceOnCurrencyRateUpdate(
+                change,
+                previousState
+            )
             is CurrenciesPartialState.Empty -> previousState
         }
     }
@@ -70,12 +74,11 @@ class CurrenciesReducer @Inject constructor() :
         val item = partialState.item
         items.remove(item)
         items.add(0, previousState.data.baseCurrencyItem)
-        return CurrenciesViewState(
-            CurrenciesViewState.Data(
-                item,
-                items,
-                CurrenciesInitialState(item.currency, item.multiplicator)
-            ), isLoading = false, error = null
+        return previousState.copy(
+            data = previousState.data.copy(
+                baseCurrencyItem = item,
+                items = items
+            )
         )
     }
 
@@ -85,10 +88,31 @@ class CurrenciesReducer @Inject constructor() :
     ): CurrenciesViewState {
         return previousState.copy(
             data = previousState.data!!.copy(
-                baseCurrencyItem = previousState.data!!.baseCurrencyItem.copy(multiplicator = partialState.value),
-                items = previousState.data!!.items.map { it.copy(multiplicator = partialState.value) }
+                baseCurrencyItem = previousState.data.baseCurrencyItem.copy(multiplicator = partialState.value),
+                items = previousState.data.items.map { it.copy(multiplicator = partialState.value) }
             )
         )
+    }
+
+    private fun reduceOnCurrencyRateUpdate(
+        partialState: CurrenciesPartialState.OnCurrencyRateUpdate,
+        previousState: CurrenciesViewState
+    ): CurrenciesViewState {
+        return previousState.copy(
+            data = updateListRate(partialState.currenciesResponse, previousState),
+            isLoading = false,
+            error = null
+        )
+    }
+
+    private fun updateListRate(
+        currenciesResponse: CurrenciesResponse,
+        previousState: CurrenciesViewState
+    ): CurrenciesViewState.Data {
+        val newItems = previousState.data!!.items.map {
+            it.copy(rate = currenciesResponse.currencyRates.getValue(it.currency))
+        }
+        return previousState.data.copy(items = newItems)
     }
 
     private fun getDataLoadedList(

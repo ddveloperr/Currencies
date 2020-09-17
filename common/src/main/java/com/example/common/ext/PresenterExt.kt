@@ -61,3 +61,19 @@ inline fun <T : Any, V : MvpView> BaseMvpPresenter<V>.addAndReturnSubscription(
         override fun onStart() = onStart()
     }
 )
+
+inline fun <T : Any, V : MvpView> BaseMvpPresenter<V>.addSilentSubscription(
+    observable: Observable<T>,
+    crossinline onStart: () -> Unit = {},
+    crossinline onNext: (T) -> Unit = {},
+    crossinline onComplete: () -> Unit = {},
+    crossinline onError: (Throwable) -> Unit = {}
+): Disposable = addSilentSubscription(
+    observable,
+    object : BaseSubscriber<T>() {
+        override fun onComplete() = onComplete()
+        override fun onError(e: Throwable) = onError(e)
+        override fun onNext(t: T) = onNext(t)
+        override fun onStart() = onStart()
+    }
+)

@@ -47,7 +47,7 @@ abstract class MviPresenter<V : MviView, A : MviAction, VS : MviViewState, IS : 
                 .observeOn(Schedulers.io())
                 .distinctUntilChanged()
                 .withLatestFrom(infoDataSubject, ::Pair)
-                .switchMap { (action, initialData) ->
+                .flatMap { (action, initialData) ->
                     useCase.onAction(action, initialData)
                 }
                 .scan(initialState, reducer::reduce),

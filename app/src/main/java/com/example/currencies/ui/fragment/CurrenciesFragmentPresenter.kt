@@ -1,25 +1,34 @@
 package com.example.currencies.ui.fragment
 
+import com.example.currencies.domain.CurrenciesRepository
 import com.example.currencies.domain.model.Currency
 import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
 import com.example.currencies.ui.fragment.mvi.*
 import com.example.mvi.MviPresenter
-import com.example.mvi.MviSubscriptions
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
 import java.math.BigDecimal
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import com.example.common.ext.addSilentSubscription
 
 class CurrenciesFragmentPresenter @Inject constructor(
+    private val repository: CurrenciesRepository,
     useCase: CurrenciesUseCase,
     reducer: CurrenciesReducer
-) : MviPresenter<CurrenciesFragmentView, CurrenciesViewAction, CurrenciesViewState, CurrenciesInitialState, CurrenciesPartialState, MviSubscriptions>(
+) : MviPresenter<CurrenciesFragmentView, CurrenciesViewAction, CurrenciesViewState, CurrenciesInitialState, CurrenciesPartialState, CurrenciesSubscriptions>(
     reducer,
     useCase
 ) {
 
+    companion object {
+        private const val UPDATE_INTERVAL_SEC = 2L
+    }
+
     private val defaultMultiplicator = BigDecimal.valueOf(100)
+
+    private var currencyUpdateDisposable: Disposable? = null
 
     override val infoDataSubject: BehaviorSubject<CurrenciesInitialState> =
         BehaviorSubject.createDefault(
@@ -43,6 +52,12 @@ class CurrenciesFragmentPresenter @Inject constructor(
         viewActionSubject.onNext(CurrenciesViewAction.OnEditValueChanged(item, value))
     }
 
+    override fun renderSubscriptionEvent(subscriptionEvent: CurrenciesSubscriptions) {
+        when (subscriptionEvent) {
+            is CurrenciesSubscriptions.StartRateUpdate -> startCurrencyUpdate(subscriptionEvent.baseCurrency)
+        }
+    }
+
     override fun render(state: CurrenciesViewState) {
         state.data?.initialState?.let {
             infoDataSubject.onNext(it)
@@ -57,6 +72,27 @@ class CurrenciesFragmentPresenter @Inject constructor(
             state.data != null -> {
                 ifViewAttached { it.render(state.data.getList()) }
             }
+        }
+    }
+
+    override fun unsubscribe() {
+        super.unsubscribe()
+        cancelCurrencyUpdate()
+    }
+
+    private fun startCurrencyUpdate(baseCurrency: Currency) {
+        cancelCurrencyUpdate()
+        currencyUpdateDisposable = addSilentSubscription(
+            Observable.interval(UPDATE_INTERVAL_SEC, TimeUnit.SECONDS).flatMapSingle {
+                repository.getCurrencyRates(baseCurrency.name)
+            }, onNext = {
+                viewActionSubject.onNext(CurrenciesViewAction.OnCurrencyRateUpdate(it))
+            })
+    }
+
+    private fun cancelCurrencyUpdate() {
+        if (currencyUpdateDisposable != null && !currencyUpdateDisposable!!.isDisposed) {
+            currencyUpdateDisposable!!.dispose()
         }
     }
 
