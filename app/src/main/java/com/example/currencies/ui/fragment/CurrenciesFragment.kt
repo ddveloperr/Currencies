@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.example.currencies.R
 import com.example.common.ext.lazyNone
 import com.example.common.recycler.OnItemClickListener
@@ -62,6 +63,14 @@ class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmen
 
     override fun render(items: List<CurrencyViewHolderItem>) {
         adapter.clearAndAddAll(items)
+    }
+
+    override fun showProgressBar() {
+        progressBar.isVisible = true
+    }
+
+    override fun hideProgressBar() {
+        progressBar.isVisible = false
     }
 
     private fun initRecyclerView() {

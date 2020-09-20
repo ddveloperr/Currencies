@@ -65,13 +65,16 @@ class CurrenciesFragmentPresenter @Inject constructor(
         }
         when {
             state.isLoading -> {
-
+                ifViewAttached { it.showProgressBar() }
             }
             state.error != null -> {
-
+                ifViewAttached { it.hideProgressBar() }
             }
             state.data != null -> {
-                ifViewAttached { it.render(state.data.getList()) }
+                ifViewAttached {
+                    it.hideProgressBar()
+                    it.render(state.data.getList())
+                }
             }
         }
     }

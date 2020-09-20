@@ -48,6 +48,7 @@ class CurrenciesUseCase @Inject constructor(private val repository: CurrenciesRe
             CurrenciesPartialState.DataLoaded(it, item.getDisplayValue()).toObservable()
         }.cast(CurrenciesPartialState::class.java)
             .startWith(CurrenciesPartialState.OnItemClicked(item))
+            .onErrorReturnItem(CurrenciesPartialState.Empty)
     }
 
     private fun onEditValueChanged(
