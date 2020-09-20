@@ -10,10 +10,13 @@ import com.example.currencies.R
 class CurrenciesRecyclerAdapter(
     private val onItemClickListener: OnItemClickListener<CurrencyViewHolderItem>,
     private val onRateChanged: OnRateChanged
-) :
-    RecyclerView.Adapter<CurrencyViewHolder>() {
+) : RecyclerView.Adapter<CurrencyViewHolder>() {
 
     private val adapterItems: MutableList<CurrencyViewHolderItem> = mutableListOf()
+
+    init {
+        setHasStableIds(true)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         return CurrencyViewHolder(
@@ -35,6 +38,10 @@ class CurrenciesRecyclerAdapter(
         adapterItems.clear()
         adapterItems.addAll(items)
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return getItem(position).currency.hashCode().toLong()
     }
 
     private fun getItem(position: Int): CurrencyViewHolderItem = adapterItems[position]

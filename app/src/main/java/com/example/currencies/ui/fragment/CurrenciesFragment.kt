@@ -56,11 +56,16 @@ class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmen
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView.adapter = adapter
+        initRecyclerView()
         presenter.init()
     }
 
     override fun render(items: List<CurrencyViewHolderItem>) {
         adapter.clearAndAddAll(items)
+    }
+
+    private fun initRecyclerView() {
+        recyclerView.adapter = adapter
+        recyclerView.itemAnimator?.changeDuration = 0L
     }
 }

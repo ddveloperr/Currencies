@@ -45,6 +45,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/rate_input_hint"
         android:inputType="numberDecimal"
+        android:longClickable="false"
         android:textAppearance="@style/TextAppearance.Primary.20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
