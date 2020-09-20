@@ -52,7 +52,9 @@ class CurrencyViewHolder(
     }
 
     private fun bindIcon(item: CurrencyViewHolderItem) {
-        flagIcon.setImageDrawable(getCurrencyDrawable(item))
+        item.icon?.let { resId ->
+            flagIcon.setImageDrawable(ContextCompat.getDrawable(containerView.context, resId))
+        }
     }
 
     private fun bindSubtitle(item: CurrencyViewHolderItem) {
@@ -72,16 +74,5 @@ class CurrencyViewHolder(
     private fun getEditableValue(item: CurrencyViewHolderItem): StringSource {
         val multiplicator = item.multiplicator
         return if (multiplicator != null) StringSource.Text(item.getDisplayValue().toString()) else StringSource.Empty
-    }
-
-    private fun getCurrencyDrawable(item: CurrencyViewHolderItem): Drawable? {
-        return if (item.icon != null) {
-            ContextCompat.getDrawable(containerView.context, item.icon)
-        } else {
-            CurrenciesViewHolderDrawableHelper.getDefaultDrawable(
-                containerView.context,
-                item.currency.name[0].toString()
-            )
-        }
     }
 }
