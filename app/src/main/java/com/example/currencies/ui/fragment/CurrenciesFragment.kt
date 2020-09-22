@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.currencies.R
 import com.example.common.ext.lazyNone
 import com.example.common.recycler.OnItemClickListener
@@ -67,11 +65,6 @@ class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmen
     }
 
     override fun scrollToTop() {
-//        (recyclerView.layoutManager as LinearLayoutManager).smoothScrollToPosition(
-//            recyclerView,
-//            RecyclerView.State(),
-//            0
-//        )
         recyclerView.smoothScrollToPosition(0)
     }
 
