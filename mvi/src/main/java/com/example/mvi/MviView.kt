@@ -1,5 +1,5 @@
 package com.example.mvi
 
-import com.hannesdorfmann.mosby3.mvp.MvpView
+import com.example.common.ui.BaseView
 
-interface MviView: MvpView
+interface MviView: BaseView

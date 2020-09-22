@@ -9,9 +9,9 @@ import androidx.core.view.isVisible
 import com.example.currencies.R
 import com.example.common.ext.lazyNone
 import com.example.common.recycler.OnItemClickListener
+import com.example.common.ui.BaseFragment
 import com.example.currencies.ui.fragment.adapter.CurrenciesRecyclerAdapter
 import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
-import com.hannesdorfmann.mosby3.mvp.MvpFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -19,7 +19,7 @@ import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_currencies.*
 import javax.inject.Inject
 
-class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmentPresenter>(),
+class CurrenciesFragment : BaseFragment<CurrenciesFragmentView, CurrenciesFragmentPresenter>(),
     CurrenciesFragmentView, HasAndroidInjector {
 
     @Inject

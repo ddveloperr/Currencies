@@ -64,7 +64,6 @@ class CurrenciesFragmentPresenter @Inject constructor(
     }
 
 
-
     override fun render(state: CurrenciesViewState) {
         state.data?.initialState?.let {
             infoDataSubject.onNext(it)
@@ -74,7 +73,10 @@ class CurrenciesFragmentPresenter @Inject constructor(
                 ifViewAttached { it.showProgressBar() }
             }
             state.error != null -> {
-                ifViewAttached { it.hideProgressBar() }
+                ifViewAttached {
+                    it.hideProgressBar()
+                    it.onError(state.error)
+                }
             }
             state.data != null -> {
                 ifViewAttached {
