@@ -8,7 +8,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class MainActivityFragmentModule {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [CurrenciesFragmentModule::class])
     @FragmentScope
-    abstract fun contributeFirstFragmentInjector(): CurrenciesFragment
+    abstract fun contributeCurrenciesFragmentInjector(): CurrenciesFragment
 }

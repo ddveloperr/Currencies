@@ -1,10 +1,8 @@
 package com.example.currencies.ui.fragment.adapter
 
-import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.common.ext.toBigDecimal

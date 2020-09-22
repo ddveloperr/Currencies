@@ -15,8 +15,7 @@ data class CurrencyViewHolderItem(
     val icon: Int?,
     val rate: BigDecimal,
     val multiplicator: BigDecimal?,
-    val currency: Currency,
-    val isBaseCurrency: Boolean = false
+    val currency: Currency
 ) : Serializable {
     fun getDisplayValue(): BigDecimal {
         return (rate * multiplicator.valueOrZero()).setScale(2, RoundingMode.CEILING)

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.currencies.R
 import com.example.common.ext.lazyNone
 import com.example.common.recycler.OnItemClickListener
@@ -36,7 +38,6 @@ class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmen
 
     private val itemClickListener: OnItemClickListener<CurrencyViewHolderItem> = { item ->
         presenter.onItemClicked(item)
-        recyclerView.smoothScrollToPosition(0)
     }
 
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
@@ -63,6 +64,15 @@ class CurrenciesFragment : MvpFragment<CurrenciesFragmentView, CurrenciesFragmen
 
     override fun render(items: List<CurrencyViewHolderItem>) {
         adapter.clearAndAddAll(items)
+    }
+
+    override fun scrollToTop() {
+//        (recyclerView.layoutManager as LinearLayoutManager).smoothScrollToPosition(
+//            recyclerView,
+//            RecyclerView.State(),
+//            0
+//        )
+        recyclerView.smoothScrollToPosition(0)
     }
 
     override fun showProgressBar() {

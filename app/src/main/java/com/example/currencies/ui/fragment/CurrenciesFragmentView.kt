@@ -5,6 +5,7 @@ import com.example.mvi.MviView
 
 interface CurrenciesFragmentView: MviView {
     fun render(items: List<CurrencyViewHolderItem>)
+    fun scrollToTop()
     fun showProgressBar()
     fun hideProgressBar()
 }

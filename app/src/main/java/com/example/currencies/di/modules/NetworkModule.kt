@@ -24,7 +24,6 @@ class NetworkModule {
         @CurrenciesHttpClient okHttpClient: OkHttpClient,
         gson: Gson
     ): CurrenciesApi {
-
         val retrofit = Retrofit.Builder()
             .baseUrl(ConfigUrls.REVOLUT_ENDPOINT)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -38,8 +37,7 @@ class NetworkModule {
     @Singleton
     @CurrenciesHttpClient
     fun provideCurrenciesHttpClient(): OkHttpClient {
-        return OkHttpClient()
-            .newBuilder().build()
+        return OkHttpClient().newBuilder().build()
     }
 
     @Provides

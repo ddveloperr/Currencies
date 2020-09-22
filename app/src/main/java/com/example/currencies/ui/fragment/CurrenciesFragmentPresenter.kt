@@ -12,9 +12,18 @@ import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import com.example.common.ext.addSilentSubscription
+import com.example.currencies.di.qualifier.CurrenciesDefaultCurrency
+import com.example.currencies.di.qualifier.CurrenciesDefaultMultiplicator
+import com.example.currencies.di.qualifier.CurrenciesUpdateInterval
 
 class CurrenciesFragmentPresenter @Inject constructor(
     private val repository: CurrenciesRepository,
+    @CurrenciesUpdateInterval
+    private val updateInterval: BigDecimal,
+    @CurrenciesDefaultMultiplicator
+    private val defaultMultiplicator: BigDecimal,
+    @CurrenciesDefaultCurrency
+    private val defaultCurrency: Currency,
     useCase: CurrenciesUseCase,
     reducer: CurrenciesReducer
 ) : MviPresenter<CurrenciesFragmentView, CurrenciesViewAction, CurrenciesViewState, CurrenciesInitialState, CurrenciesPartialState, CurrenciesSubscriptions>(
@@ -22,17 +31,11 @@ class CurrenciesFragmentPresenter @Inject constructor(
     useCase
 ) {
 
-    companion object {
-        private const val UPDATE_INTERVAL_SEC = 2L
-    }
-
-    private val defaultMultiplicator = BigDecimal.valueOf(100)
-
     private var currencyUpdateDisposable: Disposable? = null
 
     override val infoDataSubject: BehaviorSubject<CurrenciesInitialState> =
         BehaviorSubject.createDefault(
-            CurrenciesInitialState(Currency.USD, defaultMultiplicator)
+            CurrenciesInitialState(defaultCurrency, defaultMultiplicator)
         )
 
     override fun init() {
@@ -55,9 +58,12 @@ class CurrenciesFragmentPresenter @Inject constructor(
     override fun renderSubscriptionEvent(subscriptionEvent: CurrenciesSubscriptions) {
         when (subscriptionEvent) {
             is CurrenciesSubscriptions.StartRateUpdate -> startCurrencyUpdate(subscriptionEvent.baseCurrency)
-            CurrenciesSubscriptions.StopRateUpdate -> cancelCurrencyUpdate()
+            is CurrenciesSubscriptions.StopRateUpdate -> cancelCurrencyUpdate()
+            is CurrenciesSubscriptions.ScrollToTop -> scrollToTop()
         }
     }
+
+
 
     override fun render(state: CurrenciesViewState) {
         state.data?.initialState?.let {
@@ -79,6 +85,10 @@ class CurrenciesFragmentPresenter @Inject constructor(
         }
     }
 
+    private fun scrollToTop() {
+        ifViewAttached { it.scrollToTop() }
+    }
+
     override fun unsubscribe() {
         super.unsubscribe()
         cancelCurrencyUpdate()
@@ -87,7 +97,7 @@ class CurrenciesFragmentPresenter @Inject constructor(
     private fun startCurrencyUpdate(baseCurrency: Currency) {
         cancelCurrencyUpdate()
         currencyUpdateDisposable = addSilentSubscription(
-            Observable.interval(UPDATE_INTERVAL_SEC, TimeUnit.SECONDS).flatMapSingle {
+            Observable.interval(updateInterval.toLong(), TimeUnit.SECONDS).flatMapSingle {
                 repository.getCurrencyRates(baseCurrency.name)
             }, onNext = {
                 viewActionSubject.onNext(CurrenciesViewAction.OnCurrencyRateUpdate(it))
