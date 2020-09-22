@@ -33,6 +33,20 @@ class CurrenciesRecyclerAdapter(
     override fun getItemCount(): Int = adapterItems.size
 
     fun clearAndAddAll(items: List<CurrencyViewHolderItem>) {
+        if (baseCurrencyHasChanged(items)) {
+            updateAllItems(items)
+        } else {
+            updateNonBase(items)
+        }
+    }
+
+    private fun updateNonBase(items: List<CurrencyViewHolderItem>) {
+        adapterItems.clear()
+        adapterItems.addAll(items)
+        notifyItemRangeChanged(1, adapterItems.size)
+    }
+
+    private fun updateAllItems(items: List<CurrencyViewHolderItem>) {
         val diffCallback = CurrenciesDiffCallback(adapterItems, items)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         adapterItems.clear()
@@ -42,6 +56,10 @@ class CurrenciesRecyclerAdapter(
 
     override fun getItemId(position: Int): Long {
         return getItem(position).currency.hashCode().toLong()
+    }
+
+    private fun baseCurrencyHasChanged(newList: List<CurrencyViewHolderItem>): Boolean {
+        return adapterItems.getOrNull(0)?.currency !== newList.getOrNull(0)?.currency
     }
 
     private fun getItem(position: Int): CurrencyViewHolderItem = adapterItems[position]

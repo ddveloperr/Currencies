@@ -17,7 +17,7 @@ class CurrenciesFragmentModule {
     @FragmentScope
     @CurrenciesUpdateInterval
     fun provideCurrenciesUpdateInterval(): BigDecimal {
-        return BigDecimal.valueOf(2)
+        return BigDecimal.valueOf(1)
     }
 
     @Provides

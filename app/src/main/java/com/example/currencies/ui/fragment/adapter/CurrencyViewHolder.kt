@@ -30,6 +30,11 @@ class CurrencyViewHolder(
             }
 
         }
+        rateValue.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus && !isBaseCurrency() && item != null) {
+                onItemClickListener.invoke(item!!)
+            }
+        }
     }
 
     private val textWatcher = object : AbstractTextWatcher() {
@@ -64,8 +69,8 @@ class CurrencyViewHolder(
 
     private fun bindEditText(item: CurrencyViewHolderItem) {
         rateValue.removeTextChangedListener(textWatcher)
-        rateValue.text = Editable.Factory.getInstance()
-            .newEditable(getEditableValue(item).getText(containerView.context))
+        rateValue.text = null
+        rateValue.append(getEditableValue(item).getText(containerView.context))
         rateValue.addTextChangedListener(textWatcher)
     }
 

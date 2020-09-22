@@ -53,7 +53,18 @@ class CurrenciesReducer @Inject constructor() :
         previousState: CurrenciesViewState
     ): CurrenciesViewState {
         return previousState.copy(
-            data = getDataLoadedList(partialState.data, partialState.multiplicator),
+            data = if (previousState.data?.items.isNullOrEmpty()) {
+                getNewLoadedListData(
+                    partialState.data,
+                    partialState.multiplicator
+                )
+            } else {
+                getUpdatedLoadedListData(
+                    partialState.data,
+                    previousState.data!!,
+                    partialState.multiplicator
+                )
+            },
             isLoading = false,
             error = null
         )
@@ -78,7 +89,8 @@ class CurrenciesReducer @Inject constructor() :
             data = previousState.data.copy(
                 baseCurrencyItem = item,
                 items = items
-            )
+            ),
+            isLoading = true
         )
     }
 
@@ -115,7 +127,7 @@ class CurrenciesReducer @Inject constructor() :
         return previousState.data.copy(items = newItems)
     }
 
-    private fun getDataLoadedList(
+    private fun getNewLoadedListData(
         response: CurrenciesResponse,
         multiplicator: BigDecimal?
     ): CurrenciesViewState.Data {
@@ -139,6 +151,24 @@ class CurrenciesReducer @Inject constructor() :
                 multiplicator
             ), items
         )
+    }
+
+    private fun getUpdatedLoadedListData(
+        response: CurrenciesResponse,
+        previousState: CurrenciesViewState.Data,
+        multiplicator: BigDecimal?
+    ): CurrenciesViewState.Data {
+        val baseCurrency = previousState.baseCurrencyItem.copy(
+            rate = BASE_CURRENCY_RATE,
+            multiplicator = multiplicator
+        )
+        val items = previousState.items.toMutableList().map {
+            it.copy(
+                rate = response.currencyRates.getValue(it.currency),
+                multiplicator = multiplicator
+            )
+        }
+        return previousState.copy(baseCurrencyItem = baseCurrency, items = items)
     }
 
     private fun getCurrencyViewHolderItem(

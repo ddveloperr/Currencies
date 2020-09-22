@@ -20,7 +20,7 @@ class CurrenciesUseCase @Inject constructor(private val repository: CurrenciesRe
     ): Observable<CurrenciesPartialState> {
         return when (action) {
             is CurrenciesViewAction.StartFirstLoad -> onStartFirstLoad(state)
-            is CurrenciesViewAction.OnItemClicked -> onItemClicked(action.item)
+            is CurrenciesViewAction.OnItemClicked -> onItemClicked(action)
             is CurrenciesViewAction.OnEditValueChanged -> onEditValueChanged(
                 action.item,
                 action.value
@@ -40,14 +40,14 @@ class CurrenciesUseCase @Inject constructor(private val repository: CurrenciesRe
     }
 
     private fun onItemClicked(
-        item: CurrencyViewHolderItem
+        action: CurrenciesViewAction.OnItemClicked
     ): Observable<CurrenciesPartialState> {
         subscriptionsSubject.onNext(CurrenciesSubscriptions.StopRateUpdate)
-        return repository.getCurrencyRates(item.currency.name).flatMapObservable {
-            subscriptionsSubject.onNext(CurrenciesSubscriptions.StartRateUpdate(item.currency))
-            CurrenciesPartialState.DataLoaded(it, item.getDisplayValue()).toObservable()
+        return repository.getCurrencyRates(action.item.currency.name).flatMapObservable {
+            subscriptionsSubject.onNext(CurrenciesSubscriptions.StartRateUpdate(action.item.currency))
+            CurrenciesPartialState.DataLoaded(it, action.item.getDisplayValue()).toObservable()
         }.cast(CurrenciesPartialState::class.java)
-            .startWith(CurrenciesPartialState.OnItemClicked(item))
+            .startWith(CurrenciesPartialState.OnItemClicked(action.item))
             .doOnComplete { subscriptionsSubject.onNext(CurrenciesSubscriptions.ScrollToTop) }
             .onErrorReturnItem(CurrenciesPartialState.Empty)
     }
