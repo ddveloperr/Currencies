@@ -46,15 +46,20 @@
 
         <EditText
             android:id="@+id/rateValue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
             android:hint="@string/rate_input_hint"
             android:inputType="numberDecimal"
             android:longClickable="false"
             android:textAppearance="@style/TextAppearance.Primary.20"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@id/currencySubtitle"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="wrap"
             tools:text="1450.2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
