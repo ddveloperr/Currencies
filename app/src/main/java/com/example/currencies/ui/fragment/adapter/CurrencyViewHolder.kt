@@ -25,10 +25,9 @@ class CurrencyViewHolder(
 
     init {
         containerView.setOnClickListener {
-            item?.let { item ->
-                onItemClickListener.invoke(item)
+            if (!isBaseCurrency() && item != null) {
+                onItemClickListener.invoke(item!!)
             }
-
         }
         rateValue.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus && !isBaseCurrency() && item != null) {
