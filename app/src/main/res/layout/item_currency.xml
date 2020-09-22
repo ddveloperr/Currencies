@@ -45,7 +45,7 @@
             tools:text="US DOLLAR" />
 
         <EditText
-            android:id="@+id/rateValue"
+            android:id="@+id/currencyEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

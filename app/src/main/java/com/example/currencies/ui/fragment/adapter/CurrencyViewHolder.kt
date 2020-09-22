@@ -29,7 +29,7 @@ class CurrencyViewHolder(
                 onItemClickListener.invoke(item!!)
             }
         }
-        rateValue.setOnFocusChangeListener { v, hasFocus ->
+        currencyEditText.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus && !isBaseCurrency() && item != null) {
                 onItemClickListener.invoke(item!!)
             }
@@ -67,10 +67,10 @@ class CurrencyViewHolder(
     }
 
     private fun bindEditText(item: CurrencyViewHolderItem) {
-        rateValue.removeTextChangedListener(textWatcher)
-        rateValue.text = null
-        rateValue.append(getEditableValue(item).getText(containerView.context))
-        rateValue.addTextChangedListener(textWatcher)
+        currencyEditText.removeTextChangedListener(textWatcher)
+        currencyEditText.text = null
+        currencyEditText.append(getEditableValue(item).getText(containerView.context))
+        currencyEditText.addTextChangedListener(textWatcher)
     }
 
     private fun getEditableValue(item: CurrencyViewHolderItem): StringSource {
