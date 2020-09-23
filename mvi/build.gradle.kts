@@ -44,5 +44,6 @@ dependencies {
     implementation(Libraries.mosby)
 
     implementation(project(":common"))
+    implementation(project(":common_ui"))
 
 }

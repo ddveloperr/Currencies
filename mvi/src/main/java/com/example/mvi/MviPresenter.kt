@@ -1,6 +1,6 @@
 package com.example.mvi
 
-import com.example.common.ui.BaseMvpPresenter
+import com.example.common_ui.fragment.BaseMvpPresenter
 import com.example.mvi.action.MviAction
 import com.example.mvi.domain.MviUseCase
 import com.example.mvi.state.MviInitialState
@@ -9,7 +9,7 @@ import com.example.mvi.state.MviViewState
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
-import com.example.common.ext.addAndReturnSubscription
+import com.example.common_ui.ext.addAndReturnSubscription
 
 abstract class MviPresenter<V : MviView, A : MviAction, VS : MviViewState, IS : MviInitialState, PS : MviPartialState, S : MviSubscriptions>(
     protected val reducer: MviReducer<VS, PS>,

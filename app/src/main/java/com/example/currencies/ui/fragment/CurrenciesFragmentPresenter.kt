@@ -11,7 +11,7 @@ import io.reactivex.subjects.BehaviorSubject
 import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import com.example.common.ext.addSilentSubscription
+import com.example.common_ui.ext.addSilentSubscription
 import com.example.currencies.di.qualifier.CurrenciesDefaultCurrency
 import com.example.currencies.di.qualifier.CurrenciesDefaultMultiplicator
 import com.example.currencies.di.qualifier.CurrenciesUpdateInterval

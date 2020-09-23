@@ -1,4 +1,4 @@
-package com.example.common.ui
+package com.example.common_ui.fragment
 
 import com.hannesdorfmann.mosby3.mvp.MvpView
 

@@ -1,4 +1,4 @@
-package com.example.common.ui
+package com.example.common_ui.fragment
 
 import com.example.common.rx.schedulers.BaseSubscriber
 import com.example.common.rx.subscribers.ObservableSubscribers

@@ -1,8 +1,8 @@
-package com.example.common.ext
+package com.example.common_ui.ext
 
 import com.example.common.rx.schedulers.BaseSingleSubscriber
 import com.example.common.rx.schedulers.BaseSubscriber
-import com.example.common.ui.BaseMvpPresenter
+import com.example.common_ui.fragment.BaseMvpPresenter
 import com.hannesdorfmann.mosby3.mvp.MvpView
 import io.reactivex.Observable
 import io.reactivex.Single

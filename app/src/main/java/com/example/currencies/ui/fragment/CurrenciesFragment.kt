@@ -9,7 +9,7 @@ import androidx.core.view.isVisible
 import com.example.currencies.R
 import com.example.common.ext.lazyNone
 import com.example.common.recycler.OnItemClickListener
-import com.example.common.ui.BaseFragment
+import com.example.common_ui.fragment.BaseFragment
 import com.example.currencies.ui.fragment.adapter.CurrenciesRecyclerAdapter
 import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
 import dagger.android.AndroidInjector
