@@ -1,14 +1,12 @@
 package com.example.currencies.ui.fragment.mvi
 
 import com.example.common.ext.toObservable
-import com.example.common.ext.valueOrZero
 import com.example.currencies.domain.CurrenciesRepository
 import com.example.currencies.domain.model.CurrenciesResponse
 import com.example.currencies.ui.fragment.adapter.CurrencyViewHolderItem
 import com.example.mvi.domain.MviUseCase
 import io.reactivex.Observable
 import java.math.BigDecimal
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class CurrenciesUseCase @Inject constructor(private val repository: CurrenciesRepository) :

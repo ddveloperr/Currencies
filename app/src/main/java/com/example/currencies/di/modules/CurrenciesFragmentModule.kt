@@ -8,7 +8,6 @@ import com.example.currencies.domain.model.Currency
 import dagger.Module
 import dagger.Provides
 import java.math.BigDecimal
-import javax.inject.Singleton
 
 @Module
 class CurrenciesFragmentModule {

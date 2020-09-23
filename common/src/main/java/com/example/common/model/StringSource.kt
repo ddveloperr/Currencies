@@ -14,7 +14,7 @@ sealed class StringSource {
         override fun getText(context: Context): String = context.getString(value)
     }
 
-    object Empty: StringSource(){
+    object Empty : StringSource() {
         override fun getText(context: Context): String = ""
     }
 }

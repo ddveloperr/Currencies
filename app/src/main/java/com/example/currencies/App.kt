@@ -37,7 +37,7 @@ class App : Application(), HasAndroidInjector {
 
     private fun rxJavaErrorHandler() {
         RxJavaPlugins.setErrorHandler {
-            // todo
+            // todo add global error log handler (Crashlytics/Amplitude)
         }
     }
 

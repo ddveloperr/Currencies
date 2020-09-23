@@ -8,11 +8,8 @@
     <color name="black_20">#33000000</color>
 
     <color name="toolbar_black">@color/black</color>
-    <color name="primary_black">#191C1F</color>
-    <color name="grey_50">#8B959E</color>
-
 
     <!--    Text Colors-->
-    <color name="text_primary">@color/primary_black</color>
-    <color name="text_secondary">@color/grey_50</color>
+    <color name="text_primary">#191C1F</color>
+    <color name="text_secondary">#8B959E</color>
 </resources>

@@ -1,7 +1,7 @@
 package com.example.currencies.ui.fragment.adapter
 
 import androidx.annotation.DrawableRes
-import com.example.common.ext.valueOrZero
+import com.example.common.ext.getOrZero
 import com.example.common.model.StringSource
 import com.example.currencies.domain.model.Currency
 import java.io.Serializable
@@ -18,6 +18,6 @@ data class CurrencyViewHolderItem(
     val currency: Currency
 ) : Serializable {
     fun getDisplayValue(): BigDecimal {
-        return (rate * multiplicator.valueOrZero()).setScale(2, RoundingMode.CEILING)
+        return (rate * multiplicator.getOrZero()).setScale(2, RoundingMode.CEILING)
     }
 }
