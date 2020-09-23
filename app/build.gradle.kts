@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.config.KotlinCompilerVersion
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -41,37 +42,35 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin("stdlib-jdk7", KotlinCompilerVersion.VERSION))
-    implementation("androidx.core:core-ktx:1.3.1")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.google.android.material:material:1.2.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.0.1")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.0")
-    implementation("androidx.navigation:navigation-ui-ktx:2.3.0")
-    testImplementation("junit:junit:4.13")
-    androidTestImplementation("androidx.test.ext:junit:1.1.2")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+    implementation(Libraries.coreKtx)
+    implementation(Libraries.appcompat)
+    implementation(Libraries.material)
+    implementation(Libraries.constraintLayout)
+    implementation(Libraries.fragmentNavigation)
+    testImplementation(Libraries.junit)
+    androidTestImplementation(Libraries.junitTestExt)
+    androidTestImplementation(Libraries.espressoCore)
 
     //dagger
-    val daggerVersion = "2.27"
-    implementation("com.google.dagger:dagger-android:$daggerVersion")
-    implementation("com.google.dagger:dagger-android-support:$daggerVersion")
-    annotationProcessor("com.google.dagger:dagger-android-processor:$daggerVersion")
-    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
-    kapt("com.google.dagger:dagger-android-processor:$daggerVersion")
+    implementation(Libraries.dagger)
+    implementation(Libraries.daggerAndroidSupport)
+    annotationProcessor(Libraries.daggerAndroidProcessor)
+    kapt(Libraries.daggerCompiler)
+    kapt(Libraries.daggerAndroidProcessor)
 
     //rxjava
-    implementation("io.reactivex.rxjava2:rxjava:2.2.19")
-    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation(Libraries.rxJava)
+    implementation(Libraries.rxAndroid)
 
     //retrofit
-    val retrofitVersion = "2.6.4"
-    implementation("com.google.code.gson:gson:2.8.6")
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion")
-    implementation("com.squareup.okhttp3:okhttp:4.8.1")
+    implementation(Libraries.gson)
+    implementation(Libraries.retrofit)
+    implementation(Libraries.retrofitGsonConverter)
+    implementation(Libraries.retrofitRxJavaAdapter)
+    implementation(Libraries.okhttp)
 
-    implementation("com.hannesdorfmann.mosby3:mvp:3.1.1")
+    //mosby
+    implementation(Libraries.mosby)
 
 
     implementation(project(":common"))

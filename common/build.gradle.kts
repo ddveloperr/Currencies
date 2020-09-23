@@ -31,17 +31,18 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(kotlin("stdlib-jdk7", org.jetbrains.kotlin.config.KotlinCompilerVersion.VERSION))
-    implementation("androidx.core:core-ktx:1.3.1")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.3.0")
-    testImplementation("junit:junit:4.13")
-    androidTestImplementation("androidx.test.ext:junit:1.1.2")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
+    implementation(Libraries.coreKtx)
+    implementation(Libraries.appcompat)
+    implementation(Libraries.fragmentNavigation)
+    testImplementation(Libraries.junit)
+    androidTestImplementation(Libraries.junitTestExt)
+    androidTestImplementation(Libraries.espressoCore)
 
     //rxjava
-    implementation("io.reactivex.rxjava2:rxjava:2.2.19")
-    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation(Libraries.rxJava)
+    implementation(Libraries.rxAndroid)
 
-    implementation("com.hannesdorfmann.mosby3:mvp:3.1.1")
+    //mosby
+    implementation(Libraries.mosby)
 
 }
