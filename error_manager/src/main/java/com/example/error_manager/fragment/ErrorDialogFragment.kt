@@ -1,12 +1,12 @@
-package com.example.common.utils
+package com.example.error_manager.fragment
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.common.R
 import com.example.common.ext.lazyNone
 import com.example.common.ext.newInstance
+import com.example.error_manager.R
 
 class ErrorDialogFragment : DialogFragment() {
 

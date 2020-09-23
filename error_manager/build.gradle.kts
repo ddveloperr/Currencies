@@ -38,4 +38,5 @@ dependencies {
     androidTestImplementation(Libraries.junitTestExt)
     androidTestImplementation(Libraries.espressoCore)
 
+    implementation(project(":common"))
 }

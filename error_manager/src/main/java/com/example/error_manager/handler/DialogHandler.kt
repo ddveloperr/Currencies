@@ -1,6 +1,7 @@
-package com.example.common.utils
+package com.example.error_manager.handler
 
 import androidx.fragment.app.FragmentActivity
+import com.example.error_manager.fragment.ErrorDialogFragment
 
 class DialogHandler {
 

@@ -1,10 +1,9 @@
 package com.example.currencies
 
 import android.app.Application
-import com.example.common.utils.ErrorHandler
-import com.example.common.utils.ErrorUtils
-import com.example.common.utils.addDefaultUncaughtExceptionHandler
 import com.example.currencies.di.DaggerAppComponent
+import com.example.error_manager.handler.ErrorHandler
+import com.example.error_manager.utils.addDefaultUncaughtExceptionHandler
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
@@ -30,7 +29,7 @@ class App : Application(), HasAndroidInjector {
     }
 
     private fun initErrorHandler() {
-        ErrorUtils.errorHandler = errorHandler
+        com.example.error_manager.utils.ErrorUtils.errorHandler = errorHandler
         rxJavaErrorHandler()
         defaultThreadErrorHandler()
     }

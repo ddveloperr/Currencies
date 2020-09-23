@@ -1,7 +1,8 @@
-package com.example.common.utils
+package com.example.error_manager.utils
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import com.example.error_manager.handler.ErrorHandler
 
 object ErrorUtils {
 

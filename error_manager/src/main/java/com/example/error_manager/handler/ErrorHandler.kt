@@ -1,4 +1,4 @@
-package com.example.common.utils
+package com.example.error_manager.handler
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity

@@ -74,6 +74,7 @@ dependencies {
 
 
     implementation(project(":common"))
+    implementation(project(":error_manager"))
     implementation(project(":mvi"))
 
 }
