@@ -42,7 +42,4 @@ dependencies {
     implementation(Libraries.rxJava)
     implementation(Libraries.rxAndroid)
 
-    //mosby
-    implementation(Libraries.mosby)
-
 }
